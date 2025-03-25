@@ -9,8 +9,8 @@ systems_numbered = [
 
 systems = {
 	"1\tx^3 - y + 4 = 0\n\tx^2 - y + 2 = 0": [
-		lambda x_vector: x_vector[0] + x_vector[1] - 2,
-		lambda x_vector: x_vector[0] * 2 + x_vector[1] - 3,
+		lambda x_vector: x_vector[0] ** 3 - x_vector[1] + 4,
+		lambda x_vector: x_vector[0] ** 2 - x_vector[1] + 2,
 	]
 }
 

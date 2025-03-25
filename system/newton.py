@@ -11,7 +11,7 @@ def find_solutions(f_system, x0_vector, eps):
 			matrix.append([])
 			for j in range(len(f_system)):
 				matrix[i].append(derivative(f_system[i], x_vector, j))
-			matrix[i].append(-f_system[i](x_vector))
+			matrix[i].append(f_system[i](x_vector))
 		x_d_vector = solve_linear_system(matrix)
 		if x_d_vector is None: return {"solution": x_vector, "iters": iters, "found": False, "msg": "Система приращений не может быть решена"}
 		x_vector_new = [x_vector[i] + x_d_vector[i] for i in range(len(x_vector))]
