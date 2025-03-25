@@ -45,7 +45,7 @@ def replace_column(matrix, vector, index) -> list[list[float]]:
 	return new_matrix
 
 
-def exclude_row_and_column(matrix, index):
+def exclude_column_and_first_row(matrix, index):
 	new_matrix = copy.deepcopy(matrix)
 	new_matrix.pop(0)
 	for i in range(len(new_matrix)):
@@ -56,5 +56,5 @@ def exclude_row_and_column(matrix, index):
 def determinant(matrix: list[list[float]]) -> float:
 	if len(matrix) == 1:
 		return matrix[0][0]
-	return sum((1 if i % 2 == 0 else -1) * matrix[0][i] * determinant(exclude_row_and_column(matrix, i)) for i in
+	return sum((1 if i % 2 == 0 else -1) * matrix[0][i] * determinant(exclude_column_and_first_row(matrix, i)) for i in
 			   range(len(matrix)))
