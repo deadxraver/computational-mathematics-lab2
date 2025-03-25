@@ -1,11 +1,8 @@
 import config
 
 
-def dx(): return 0.00001
-
-
 def derivative(f, x0):
-	return (f(x0 + dx()) - f(x0)) / dx()
+	return (f(x0 + config.dx()) - f(x0)) / config.dx()
 
 
 def find_solution(a, b, f, eps):
