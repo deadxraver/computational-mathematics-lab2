@@ -1,3 +1,6 @@
+import config
+
+
 def dx(): return 0.00001
 
 
@@ -17,9 +20,9 @@ def find_solution(a, b, f, eps):
 	phi = lambda x: x + lmbd * f(x)
 	if abs(derivative(phi, a)) > 1 or abs(derivative(phi, b)) > 1:
 		return {"found": False, "x": None, "iters": 0, "msg": "Метод не сходится"}
-	for i in range(1000):
+	for i in range(config.MAX_ITERATIONS):
 		x = phi(x_prev)
 		if abs(x - x_prev) <= eps:
 			return {"found": True, "x": x, "iters": i + 1}
 		x_prev = x
-	return {"found": False, "x": x_prev, "iters": 1000, "msg": "Превышено максимальное количество итераций"}
+	return {"found": False, "x": x_prev, "iters": config.MAX_ITERATIONS, "msg": "Превышено максимальное количество итераций"}
