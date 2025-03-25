@@ -16,10 +16,10 @@ def find_solution(a, b, f, eps):
 	x_prev = a
 	phi = lambda x: x + lmbd * f(x)
 	if abs(derivative(phi, a)) > 1 or abs(derivative(phi, b)) > 1:
-		return {"found": False, "x": None, "iters": 0, "msg": "Метод не сходится"}
+		return {"found": False, "solution": None, "iters": 0, "msg": "Метод не сходится"}
 	for i in range(config.MAX_ITERATIONS):
 		x = phi(x_prev)
 		if abs(x - x_prev) <= eps:
-			return {"found": True, "x": x, "iters": i + 1}
+			return {"found": True, "solution": x, "iters": i + 1}
 		x_prev = x
-	return {"found": False, "x": x_prev, "iters": config.MAX_ITERATIONS, "msg": "Превышено максимальное количество итераций"}
+	return {"found": False, "solution": x_prev, "iters": config.MAX_ITERATIONS, "msg": "Превышено максимальное количество итераций"}
