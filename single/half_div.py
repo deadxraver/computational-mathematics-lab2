@@ -4,7 +4,7 @@ def find_solution(a, b, f, eps) -> dict[str, bool | float | int | str | None]:
 	for i in range(1000):
 		x = (a + b) / 2
 		if abs(a - b) <= eps or abs(f(x)) <= eps:
-			return {"found": True, "x": x, "iters": i}
+			return {"found": True, "x": x, "iters": i + 1}
 		if f(a) * f(x) < 0:
 			b = x
 		else:
