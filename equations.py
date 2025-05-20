@@ -12,13 +12,13 @@ systems = {
 }
 
 equations_numbered = [
-	"x^3 - x + 4",
+	"x^3",
 	"x^2 - x + 2",
 	"sin(x)"
 ]
 
 equations = {
-	equations_numbered[0]: lambda x: x ** 3 - x + 4,
+	equations_numbered[0]: lambda x: x ** 3,
 	equations_numbered[1]: lambda x: x ** 2 - x + 2,
 	equations_numbered[2]: lambda x: np.sin(x),
 }
