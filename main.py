@@ -1,34 +1,34 @@
-import math
+import argparse
 
-import single.secant, single.half_div, single.simple_iteration
-import system.newton
+import equations
+import visualization.graph_drawer
+from visualization.IO import IO
+import single
 
-systems_numbered = [
-	"1\tx^3 - y + 4 = 0\n\tx^2 - y + 2 = 0"
-]
+help_msg = '''
+Данная программа предназначена для решения нелинейных уравнений и систем нелинейных уравнений
+'''
+parser = argparse.ArgumentParser(description=help_msg)
+parser.add_argument('--filename', '-f', help='Использовать файл для ввода данных')
 
-systems = {
-	"1\tx^3 - y + 4 = 0\n\tx^2 - y + 2 = 0": [
-		lambda x_vector: x_vector[0] ** 3 - x_vector[1] + 4,
-		lambda x_vector: x_vector[0] ** 2 - x_vector[1] + 2,
-	]
-}
+args = parser.parse_args()
+io_manager = IO(args.filename)
 
-equations_numbered = [
-	"x^3 - x + 4",
-	"x^2 - x + 2",
-	"sin(x)"
-]
-
-equations = {
-	"x^3 - x + 4": lambda x: x ** 3 - x + 4,
-	"x^2 - x + 2": lambda x: x ** 2 - x + 2,
-	"sin(x)": lambda x: math.sin(x),
-}
-
-f = equations[equations_numbered[2]]
-eps = 0.00001
-print("half div: ", single.half_div.find_solution(-2, 2, f, eps))
-print("secant: ", single.secant.find_solution(-2, f, eps))
-print("simple iter: ", single.simple_iteration.find_solution(-1, 1, f, eps))
-print("newton: ", system.newton.find_solutions(systems[systems_numbered[0]], [0, 0], eps))
+print('Я хочу решать 1 - уравнение, 2 - систему')
+is_system = io_manager.read('', 'Введите 1 или 2', int, lambda x: x == 1 or x == 2) - 1
+if is_system:
+	print('Доступные системы:')
+	[print(f'{i + 1}: {equations.systems_numbered[i]}') for i in range(len(equations.systems_numbered))]
+	system_index = io_manager.read('Введите номер: ', f'Номер должен быть от 1 до {len(equations.systems_numbered)}',
+								   int, lambda x: 0 < x <= len(equations.systems_numbered)) - 1
+else:
+	print('Доступные уравнения:')
+	[print(f'{i + 1}: {equations.equations_numbered[i]}') for i in range(len(equations.equations_numbered))]
+	equation_index = io_manager.read('Введите номер: ',
+									 f'Номер должен быть от 1 до {len(equations.equations_numbered)}',
+									 int, lambda x: 0 < x <= len(equations.equations_numbered)) - 1
+	visualization.graph_drawer.draw_single_graph(equation_index, -20, 20)
+	a = io_manager.read('Введите левую границу: ', 'Введите число!', float)
+	b = io_manager.read('Введите правую границу: ', f'Введите число, большее {a}!', float, lambda x: x > a)
+	method = io_manager.read('Выберите метод: 1 - половинного деления, 2 - секущей, 3 - простой итерации',
+							 'Введите число от 1 до 3!', int, lambda n: 1 <= n <= 3)
