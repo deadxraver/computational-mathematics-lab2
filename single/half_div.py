@@ -8,6 +8,8 @@ def find_solution(a, b, f, eps) -> dict[str, bool | float | int | str | None]:
 	for i in range(config.MAX_ITERATIONS):
 		x = (a + b) / 2
 		if abs(a - b) <= eps or abs(f(x)) <= eps:
+			if x < a or x > b:
+				return {"found": False, "solution": x, "iters": i + 1, "msg": "Значение вне заданного интервала"}
 			return {"found": True, "solution": x, "iters": i + 1}
 		if f(a) * f(x) < 0:
 			b = x

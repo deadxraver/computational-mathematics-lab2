@@ -20,3 +20,11 @@ def draw_single_graph(f_index, a=-20, b=20, x0=None, y0=None):
 
 	plt.grid(True)
 	plt.show()
+
+
+def draw_system(system_index, a=-20, b=-20, x0=None, y0=None):
+	functions = [f for f in equations.equations_numbered[system_index]]
+	x = np.linspace(a, b, 400)
+	# а я не знаю как нарисовать
+
+	# честно говоря

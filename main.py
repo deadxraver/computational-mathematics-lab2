@@ -6,6 +6,7 @@ from visualization.IO import IO
 import single.half_div
 import single.secant
 import single.simple_iteration
+import system.newton
 
 help_msg = '''
 Данная программа предназначена для решения нелинейных уравнений и систем нелинейных уравнений
@@ -23,6 +24,15 @@ if is_system:
 	[print(f'{i + 1}: {equations.systems_numbered[i]}') for i in range(len(equations.systems_numbered))]
 	system_index = io_manager.read('Введите номер: ', f'Номер должен быть от 1 до {len(equations.systems_numbered)}',
 								   int, lambda x: 0 < x <= len(equations.systems_numbered)) - 1
+	print('Честно говоря, я не придумал, как нарисовать график(')
+	x0_vector = [io_manager.read('Введите x0: ', 'Введите число!', float),
+				 io_manager.read('Введите y0: ', 'Введите число!', float)]
+	eps = io_manager.read('Введите точность: ', 'Введите число от 0 до 1', float)
+	solution = system.newton.find_solutions(equations.systems[equations.systems_numbered[system_index]], x0_vector, eps)
+	if solution["found"]:
+		print(f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}')
+	else:
+		print(f'Не удалось найти решение, {solution["msg"]}, последнее приближение: {solution["solution"]}')
 else:
 	print('Доступные уравнения:')
 	[print(f'{i + 1}: {equations.equations_numbered[i]}') for i in range(len(equations.equations_numbered))]
@@ -60,4 +70,4 @@ else:
 														 equations.equations_numbered[equation_index]](
 														 solution["solution"]))
 	else:
-		print(f'Решение не найдено, {solution["msg"]}')
+		print(f'Решение не найдено, {solution["msg"]}, последнее приближение: {solution["solution"]}')
