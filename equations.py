@@ -2,7 +2,7 @@ import numpy as np
 
 systems_numbered = [
 	"\tx^3 - y + 4 = 0\n\tx^2 - y + 2 = 0",
-	"\tsin(x) - y = 0\n\tx - y = 0"
+	"\tsin(x) - y^2 = 0\n\tx - y = 0"
 ]
 
 systems = {
@@ -11,7 +11,7 @@ systems = {
 		lambda x_vector: x_vector[0] ** 2 - x_vector[1] + 2,
 	],
 	systems_numbered[1]: [
-		lambda x_vector: np.sin(x_vector[0]) - x_vector[1],
+		lambda x_vector: np.sin(x_vector[0]) - np.pow(x_vector[1], 2),
 		lambda x_vector: x_vector[0] - x_vector[1],
 	]
 }
