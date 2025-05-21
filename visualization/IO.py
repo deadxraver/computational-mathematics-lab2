@@ -20,6 +20,7 @@ class IO:
 				ret = cast_type(self.file.readline().strip())
 				if not additional_cond(ret):
 					raise ValueError
+				return ret
 			except ValueError:
 				print(err)
 				exit(-1)
