@@ -4,7 +4,7 @@ import config
 def find_solution(a, b, f, eps) -> dict[str, bool | float | int | str | None]:
 	if f(a) * f(b) > 0:
 		return {"found": False, "solution": None, "iters": 0,
-				"msg": "Функция имеет одинаковые знаки на границах, имеет четное количество корней на отрезке"}
+				"msg": "Функция имеет одинаковые знаки на границах, вероятно имеет четное количество корней на отрезке, или не имеет их вовсе, нельзя применить данный метод"}
 	for i in range(config.MAX_ITERATIONS):
 		x = (a + b) / 2
 		if abs(a - b) <= eps or abs(f(x)) <= eps:

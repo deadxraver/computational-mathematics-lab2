@@ -33,22 +33,31 @@ else:
 								   'Введите число от 1 до 3!', int, lambda n: 1 <= n <= 3)
 	visualization.graph_drawer.draw_single_graph(equation_index, -20, 20)
 	eps = io_manager.read('Введите точность: ', f'Введите число от 0 до 1(не вкл)!', float, lambda x: 0 < x < 1)
+	solution = None
+	a = None
+	b = None
 	if method_index == 1:
 		a = io_manager.read('Введите левую границу: ', 'Введите число!', float)
 		b = io_manager.read('Введите правую границу: ', f'Введите число, большее {a}!', float, lambda x: x > a)
 		solution = single.half_div.find_solution(a, b,
 												 equations.equations[equations.equations_numbered[equation_index]],
 												 eps)
-		if solution["found"]:
-			print(f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}')
-			visualization.graph_drawer.draw_single_graph(equation_index, a - 5, b + 5, solution["solution"],
-														 equations.equations[
-															 equations.equations_numbered[equation_index]](
-															 solution["solution"]))
-		else:
-			print(f'Решение не найдено, {solution["msg"]}')
 	elif method_index == 2:
 		x0 = io_manager.read('Введите начальное приближение: ', f'Введите число!', float)
+		solution = single.secant.find_solution(x0, equations.equations[equations.equations_numbered[equation_index]],
+											   eps)
+		a = x0 - 5
+		b = x0 + 5
 	else:
 		a = io_manager.read('Введите левую границу: ', 'Введите число!', float)
 		b = io_manager.read('Введите правую границу: ', f'Введите число, большее {a}!', float, lambda x: x > a)
+		solution = single.simple_iteration.find_solution(a, b, equations.equations[
+			equations.equations_numbered[equation_index]], eps)
+	if solution["found"]:
+		print(f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}')
+		visualization.graph_drawer.draw_single_graph(equation_index, a - 5, b + 5, solution["solution"],
+													 equations.equations[
+														 equations.equations_numbered[equation_index]](
+														 solution["solution"]))
+	else:
+		print(f'Решение не найдено, {solution["msg"]}')

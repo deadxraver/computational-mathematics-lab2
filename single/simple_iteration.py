@@ -20,7 +20,7 @@ def find_solution(a, b, f, eps):
 	for i in range(config.MAX_ITERATIONS):
 		x = phi(x_prev)
 		if abs(x - x_prev) <= eps:
-			return {"found": True, "solution": [x], "iters": i + 1}
+			return {"found": True, "solution": x, "iters": i + 1}
 		x_prev = x
-	return {"found": False, "solution": [x_prev], "iters": config.MAX_ITERATIONS,
+	return {"found": False, "solution": x_prev, "iters": config.MAX_ITERATIONS,
 			"msg": "Превышено максимальное количество итераций"}
