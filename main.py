@@ -31,6 +31,7 @@ if is_system:
 	solution = system.newton.find_solutions(equations.systems[equations.systems_numbered[system_index]], x0_vector, eps)
 	if solution["found"]:
 		print(f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}')
+		print(f"Разница между функциями: {solution['x_d']}")
 	else:
 		print(f'Не удалось найти решение, {solution["msg"]}, последнее приближение: {solution["solution"]}')
 else:
@@ -64,7 +65,8 @@ else:
 		solution = single.simple_iteration.find_solution(a, b, equations.equations[
 			equations.equations_numbered[equation_index]], eps)
 	if solution["found"]:
-		print(f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}')
+		print(
+			f'Решение: {solution["solution"]}, количество итераций: {solution["iters"]}, значение функции: {equations.equations[equations.equations_numbered[equation_index]](solution["solution"])}')
 		visualization.graph_drawer.draw_single_graph(equation_index, a - 5, b + 5, solution["solution"],
 													 equations.equations[
 														 equations.equations_numbered[equation_index]](

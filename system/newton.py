@@ -11,13 +11,15 @@ def find_solutions(f_system, x0_vector, eps):
 			matrix.append([])
 			for j in range(len(f_system)):
 				matrix[i].append(derivative(f_system[i], x_vector, j))
-			matrix[i].append(f_system[i](x_vector))
+			matrix[i].append(-f_system[i](x_vector))
 		x_d_vector = solve_linear_system(matrix)
+		print(f'{iters + 1}. x = {x_vector[0]}, y = {x_vector[1]}')
+		print(f'dx = {x_d_vector[0]}, dy = {x_d_vector[1]}')
 		if x_d_vector is None: return {"solution": list(map(float, x_vector)), "iters": iters, "found": False,
 									   "msg": "Система приращений не может быть решена"}
 		x_vector_new = [x_vector[i] + x_d_vector[i] for i in range(len(x_vector))]
 		if max([abs(c) for c in x_d_vector]) <= eps: return {"solution": list(map(float, x_vector_new)), "iters": iters,
-															 "found": True}
+															 "found": True, "x_d": x_d_vector}
 		x_vector = x_vector_new
 	return {"solution": list(map(float, x_vector)), "iters": config.MAX_ITERATIONS, "found": False}
 
@@ -36,7 +38,7 @@ def solve_linear_system(matrix) -> list[float] | None:
 	ans = []
 	if d == 0: return None
 	for i in range(len(matrix)):
-		ans.append(determinant(replace_column(matrix, free_coef, i)) / d)
+		ans.append(-determinant(replace_column(matrix, free_coef, i)) / d)
 	return ans
 
 
